@@ -92,3 +92,36 @@ Also always backup these values on a web application such as lastpass or 1passwo
 (Or any Web Password manager of your choice)<br>
 https://www.lastpass.com/<br>
 https://1password.com/
+
+## Running the Python Application
+### Usage
+The Span Index Python file (span_index.py) is the entrypoint for this application.<br>
+
+Run this python file from your virtual environment (or hosted server with python installed)
+with the python commands below:<br>
+* For use with a file input:
+<br>* `python aruba_ap.py`
+<br>* i.e Sample Files to test are stored in ./sample_input
+* For use with a command line input as comma and newline seperated text
+<br>* `python aruba_ap.py`
+
+#### Environment Variables
+As mentioned above please make sure to add your own Environment Variable file with the
+necessary Variables i.e .env
+(see .env.template for an example of the env variables used)
+
+To Note:<br>
+Application code resides in the application folder and
+testing code resides in the tests folder
+
+### Unit Testing
+This Application make use of the Pytest unit testing Library.<br>
+To run the unit tests you can use the single command:<br>
+`pytest` from the root directory of the repo.
+
+For more information and resources on Pytest please see Pytest docs:
+https://docs.pytest.org/en/7.2.x/
+### Program Inputs and Outputs
+* #### Input (Subset of Data in Sample Files Directory)<br>
+
+* #### Output
