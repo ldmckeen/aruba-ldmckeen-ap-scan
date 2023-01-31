@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+### Idea Files
+.idea/**
+
+### macOS template
+*.DS_Store
+.AppleDouble
+.LSOverride

@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 91
+
+ignore =
+    T001 print found.
+    D107 Missing docstring in __init__
+
+exclude =
+    .tox,
+    __pycache__,
+    .cache/,
+    manage.py,
+    .githooks/,
+    *migrations*,
+    send_report.py
