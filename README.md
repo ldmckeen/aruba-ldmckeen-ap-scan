@@ -95,7 +95,19 @@ https://1password.com/
 
 ## Running the Python Application
 ### Usage
-The Span Index Python file (span_index.py) is the entrypoint for this application.<br>
+### Django Rest Framework
+This application makes use of python and the Django Rest Framework.
+To run the application:
+`python manage.py runserver <port-number (defaults to 8000)>`
+Migrate models to DB
+`python manage.py migrate`
+
+Login:
+`admin@arubaapscan.com`
+Password:
+`Arubaapscan_1234`
+
+The Aruba Index Python file (span_index.py) is the entrypoint for this application.<br>
 
 Run this python file from your virtual environment (or hosted server with python installed)
 with the python commands below:<br>

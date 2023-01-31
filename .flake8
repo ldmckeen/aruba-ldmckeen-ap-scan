@@ -4,6 +4,7 @@ max-line-length = 91
 ignore =
     T001 print found.
     D107 Missing docstring in __init__
+    E800 Found commented out code
 
 exclude =
     .tox,

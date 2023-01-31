@@ -1,0 +1,61 @@
+"""
+Aruba AP Scan Application.
+
+~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+<serializers.py> DRF Serializers File
+
+Author:             Lloyd McKeen
+Github Username:    ldmckeen
+Email:              ldmckeen@gmail.com
+Company:            Aruba
+Date:               January 2023
+~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+===========================================================================================
+"""
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
+from rest_framework import serializers
+
+from apps.apscan.models import APScanData
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """Class to validate User Data."""
+
+    class Meta:
+        """Nested Meta Class."""
+
+        model = User
+        fields = ['url', 'username', 'email', 'groups']
+
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    """Class to validate Group Data."""
+
+    class Meta:
+        """Nested Meta Class."""
+
+        model = Group
+        fields = ['url', 'name']
+
+
+class APScanSerializer(serializers.ModelSerializer):
+    """Class to validate APScan Data."""
+
+    class Meta:
+        """Nested Meta Class."""
+
+        model = APScanData
+        fields = [
+            'band',
+            'bssid',
+            'channel',
+            'frequency',
+            'rates',
+            'rssi',
+            'security',
+            'ssid',
+            'timestamp',
+            'vendor',
+            'width'
+        ]
