@@ -17,6 +17,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from apps.apscan.models import APScanData
+from apps.apscan.models import APScanFile
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -39,7 +40,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 
 
-class APScanSerializer(serializers.ModelSerializer):
+class APScanDataSerializer(serializers.ModelSerializer):
     """Class to validate APScan Data."""
 
     class Meta:
@@ -59,3 +60,27 @@ class APScanSerializer(serializers.ModelSerializer):
             'vendor',
             'width'
         ]
+
+
+class APScanFileSerializer(serializers.Serializer):
+    """Class to validate APScan File."""
+
+    file = serializers.FileField(read_only=True)
+
+    def create(self, validated_data):
+        """AP Scan File creation."""
+        return APScanFile(id=None, **validated_data)
+
+    def update(self, instance, validated_data):
+        """AP Scan File Update."""
+        for field, value in validated_data.items():
+            setattr(instance, field, value)
+        return instance
+
+    # class Meta:
+    #     """Nested Meta Class."""
+    #
+    #     model = APScanFile
+    #     fields = [
+    #         'file'
+    #     ]

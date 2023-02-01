@@ -104,8 +104,15 @@ Return Example
 }
 
 """
+import json
+import logging
+from zipfile import ZipFile
+
+import requests
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
+from requests.exceptions import HTTPError
 from rest_framework import permissions
 from rest_framework import viewsets
 from rest_framework.decorators import action
@@ -113,9 +120,13 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from apps.apscan.models import APScanData
-from apps.apscan.serializers import APScanSerializer
+from apps.apscan.models import APScanFile
+from apps.apscan.serializers import APScanDataSerializer
+from apps.apscan.serializers import APScanFileSerializer
 from apps.apscan.serializers import GroupSerializer
 from apps.apscan.serializers import UserSerializer
+
+logger = logging.getLogger(__name__)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -134,29 +145,96 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class APScanViewSet(viewsets.ModelViewSet):
+class APScanDataViewSet(viewsets.ModelViewSet):
     """API endpoint that allows APScanData to be viewed or edited."""
 
     queryset = APScanData.objects.all()
-    serializer_class = APScanSerializer
+    serializer_class = APScanDataSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     @action(methods=['POST'], detail=True, url_path='geolocate',
             url_name='geolocate')
     def geolocate(self, request: Request, *args, **kwargs):
         """Find Geographic location of Sensor Input."""
-        # Todo:
-        #  - Use pandas to run through data in json file and convert Wifi APscan objects
-        #  - into geolocation wifiAccessPoints objects.
-        #  - Make Post Request call to geolocation API endpoint
-        #  - Use Pandas Dataframes if needed
-        #  - Cache results, memcache, reddis etc
-        success = False
-        geo_response = {'Testing': 1234}
+        # Setup Dictionary object that will be converted to Json for
+        scan_data_geofied = {
+            'considerIp': 'false',
+            'wifiAccessPoints': []
+        }
 
-        """
-        curl -d @scan_geofied.json -H "Content-Type: application/json" -i
-        "https://www.googleapis.com/geolocation/v1/geolocate?key=
-        AIzaSyCCK6hPzvUI1_XbDCV4pC1HN_6bneUejYc"
-        """
-        return Response({'success': success, 'geo_response': geo_response})
+        # Open the zip file in READ mode
+        input_zip = ZipFile(request.data['file'], 'r')
+        file_name = input_zip.namelist()[0]
+        text = input_zip.read(file_name)
+        data = json.loads(text)
+        apscan_data = data[0]
+
+        # Map Apscan data to required fields for Google Geolocation API
+        for apscan, sensor_data in apscan_data.items():
+            for item in sensor_data:
+                scan_data_geofied['wifiAccessPoints'].append(
+                    {
+                        'macAddress': item['bssid'],
+                        'signalStrength': item['rssi'],
+                        'signalToNoiseRatio': item['width']
+                    },
+                )
+
+        try:
+            response = requests.post(
+                url=f'{settings.GEOLOCATE_URL}{settings.GEOLOCATE_KEY}',
+                json=scan_data_geofied,
+            )
+            response.raise_for_status()
+            json_response = json.loads(response.content)
+            return Response(json_response)
+        except HTTPError as ex:
+            logger.error(f'services.py: Error in geo location call - {ex}')
+            return False
+
+
+class APScanFileViewSet(viewsets.ModelViewSet):
+    """API endpoint that allows APScanData to be viewed or edited."""
+
+    queryset = APScanFile.objects.all()
+    serializer_class = APScanFileSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    @action(methods=['POST'], detail=False, url_path='geolocate', url_name='geolocate')
+    def geolocate(self, request: Request, pk=None, *args, **kwargs):
+        """Find Geographic location of Sensor Input."""
+        # Setup Dictionary object that will be converted to Json for
+        scan_data_geofied = {
+            'considerIp': 'false',
+            'wifiAccessPoints': []
+        }
+
+        # Open the zip file in READ mode
+        input_zip = ZipFile(request.data['file'], 'r')
+        file_name = input_zip.namelist()[0]
+        text = input_zip.read(file_name)
+        data = json.loads(text)
+        apscan_data = data[0]
+
+        # Map Apscan data to required fields for Google Geolocation API
+        for apscan, sensor_data in apscan_data.items():
+            for item in sensor_data:
+                scan_data_geofied['wifiAccessPoints'].append(
+                    {
+                        'macAddress': item['bssid'],
+                        'signalStrength': item['rssi'],
+                        'signalToNoiseRatio': item['width']
+                    },
+                )
+
+        try:
+            response = requests.post(
+                url=f'{settings.GEOLOCATE_URL}{settings.GEOLOCATE_KEY}',
+                json=scan_data_geofied,
+            )
+            response.raise_for_status()
+            json_response = json.loads(response.content)
+            return Response(json_response)
+        except HTTPError as ex:
+            logger.error(f'services.py: Error in geo location call - {ex}')
+            return False

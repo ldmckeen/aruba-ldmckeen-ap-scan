@@ -99,8 +99,15 @@ https://1password.com/
 This application makes use of python and the Django Rest Framework.
 To run the application:
 `python manage.py runserver <port-number (defaults to 8000)>`
-Migrate models to DB
+Migrate models to DB (If you want to make use of Object specific APScan data endpoints)
 `python manage.py migrate`
+
+### Making an API call
+The apscan endpoint takes a zipfile as input and calls the Google’s geolocation API to
+return the geolocation of the sensor from the apscan data list.
+
+
+Reference: https://developers.google.com/maps/documentation/geolocation/overview
 
 Login:
 `admin@arubaapscan.com`

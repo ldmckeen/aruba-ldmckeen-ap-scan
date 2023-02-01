@@ -41,3 +41,9 @@ class APScanData(TimestampModel):
     timestamp = models.IntegerField(null=True)
     vendor = models.CharField(max_length=100, blank=True, default='')
     width = models.CharField(max_length=100, blank=True, default='')
+
+
+class APScanFile(TimestampModel):
+    """Wi-Fi access point (AP) scan result file."""
+
+    file = models.FileField(blank=False, null=False)
