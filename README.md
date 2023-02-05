@@ -105,7 +105,8 @@ Basic Auth
 }`
 
 
-## ==================================================================
+## ======================================================
+## ======================================================
 ## Developer Setup
 ### Pre-requisites
 When setting up a local environment for developing ensure you are using a local
