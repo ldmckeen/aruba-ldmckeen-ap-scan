@@ -52,7 +52,7 @@ helpful API's regarding sensor data.
 * Add swagger for prettier and more functional frontend API capabilities.
 * Updating caching to improve retrieval with additional check on ap scans bssids.
 i.e even if missing bssid's get cached result, only recall geolocate API of completely new
-bssid's present that weren't there before.
+bssid's present that were not there before.
 
 #### System Updates
 * Update to make use of a choice of DB instances.

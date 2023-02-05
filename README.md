@@ -17,7 +17,7 @@ Reference - https://developers.google.com/maps/documentation/geolocation/overvie
 
 (See Developer Setup Section below for local development setup.)
 
-###Environment Variables:
+### Environment Variables:
 This project makes use of environment variables.
 Ensure you have a .env file in your root directory, mimic the .env.template file.
 If using passwords or tokens store the passwords and secrets in a vault in the cloud
@@ -31,10 +31,10 @@ https://1password.com/
 ## Running the Application
 ### Django Rest Framework
 This application makes use of python and the Django Rest Framework.
-To run the application:
-`python manage.py runserver <port-number (defaults to 8000)>`
+To run the application:<br>
+`python manage.py runserver <port-number (defaults to 8000)>`<br>
 Migrate models to DB (If you want to make use of Object specific APScan data endpoints)
-and/or a new Database:
+and/or a new Database:<br>
 `python manage.py migrate`
 
 ### Caching
@@ -42,11 +42,11 @@ This application makes use of Memcached and the python Library pymemcache for ca
 Memcached is installed alongside python and make sure pymemcache is included in your requirements
 file.
 To toggle Caching on or off set the `USE_CACHE` boolean variable in your .env file
-#####Brew:
-Install: `brew install memcached`
-Start Memcache service: `brew services start memcached`
-Stop Memcache service: `brew services stop memcached`
-Restart Memcache service: `brew services restart memcached`
+#### Brew:
+Install: `brew install memcached`<br>
+Start Memcache service: `brew services start memcached`<br>
+Stop Memcache service: `brew services stop memcached`<br>
+Restart Memcache service: `brew services restart memcached`<br>
 
 See resources below for installation and reference:
 https://memcached.org/
@@ -54,18 +54,18 @@ https://pypi.org/project/pymemcache/
 https://pymemcache.readthedocs.io/en/latest/getting_started.html
 https://realpython.com/python-memcache-efficient-caching/
 
-If you want to create a super-user:
+To create an admin super-user:<br>
 `python manage.py createsuperuser`
 
 ### Making an API call
 The apscan endpoint takes a zipfile as input and calls the Google’s geolocation API to
 return the geolocation of the sensor from the apscan data list.
 
-####Curl command:
+#### Curl command:
 `curl -i -u 'admin:Arubaapscan_1234' -H 'Content-Type: multipart/form-data' -F 'file=@BE scan.json.zip' http://localhost:8000/apscan_file/geolocate/`
 
-####Via browser:
-(Make sure you're logged in with your DRF user. -> Login top right of broswer window)
+#### Via browser:
+(Make sure you're logged in with your DRF user. -> Login top right of browser window)
 Navigate to `/apscan_file` viewset from root, and under extra actions select Geolocate.
 
 Choose File
@@ -81,8 +81,7 @@ Post command:
 Make a POST call with Multipart Form with `file` as key and zip file as value, and
 basic auth enabled with username and password.
 
-See Insomnia folder for collections:
-
+See Insomnia folder under resources for collections:
 `http://localhost:8000/apscan_file/geolocate/`
 
 Multipart-Form
@@ -92,8 +91,8 @@ Basic Auth
 
 
 ### Program Inputs and Outputs
-* #### Input (Subset of Data in Sample Files Directory)<br>
-<br>* i.e Sample Files to test are stored in ./sample_input
+* #### Input (Subset of Data in Sample Files Directory)
+* i.e Sample Files to test are stored in ./sample_input
 
 * #### Output
 * Example Return:
@@ -106,15 +105,15 @@ Basic Auth
 }`
 
 
-## =================================
+## ==================================================================
 ## Developer Setup
 ### Pre-requisites
 When setting up a local environment for developing ensure you are using a local
 virtual environment for optimal sand-boxing and testing to minimize clashes with
 existing setups or environments on your machine.
 
-####Virtual Environment Setup
-######Pyenv
+### Virtual Environment Setup
+##### Pyenv
 (Recommendation: Use Pyenv where possible to manage your python installations)
 
 Useful pyenv commands:<br>
@@ -192,7 +191,7 @@ necessary Variables i.e .env
 (see .env.template for an example of the env variables used)
 
 To Note:<br>
-Application code resides in the application folder and
+Application code resides in the apps folder and
 testing code resides in the tests folder
 
 ### Unit Testing
