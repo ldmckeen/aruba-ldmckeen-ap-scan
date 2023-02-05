@@ -39,9 +39,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hzjlq59q240z6u4#t&^3$237-opzb=t5uao)cl&i11cic+!x6&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -107,6 +107,25 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+if env.bool('USE_SQLITE3', False):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env.str('DJANGO_DB_DATABASE'),
+            'USER': env.str('DJANGO_DB_USERNAME'),
+            'PASSWORD': env.str('DJANGO_DB_PASSWORD'),
+            'HOST': env.str('DJANGO_DB_HOST', 'localhost'),
+            'PORT': env.str('DJANGO_DB_PORT', '5432'),
+        },
+    }
 
 
 # Password validation

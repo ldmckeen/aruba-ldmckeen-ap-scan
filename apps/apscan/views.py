@@ -152,46 +152,6 @@ class APScanDataViewSet(viewsets.ModelViewSet):
     serializer_class = APScanDataSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    @action(methods=['POST'], detail=True, url_path='geolocate',
-            url_name='geolocate')
-    def geolocate(self, request: Request, *args, **kwargs):
-        """Find Geographic location of Sensor Input."""
-        # Setup Dictionary object that will be converted to Json for
-        scan_data_geofied = {
-            'considerIp': 'false',
-            'wifiAccessPoints': []
-        }
-
-        # Open the zip file in READ mode
-        input_zip = ZipFile(request.data['file'], 'r')
-        file_name = input_zip.namelist()[0]
-        text = input_zip.read(file_name)
-        data = json.loads(text)
-        apscan_data = data[0]
-
-        # Map Apscan data to required fields for Google Geolocation API
-        for apscan, sensor_data in apscan_data.items():
-            for item in sensor_data:
-                scan_data_geofied['wifiAccessPoints'].append(
-                    {
-                        'macAddress': item['bssid'],
-                        'signalStrength': item['rssi'],
-                        'signalToNoiseRatio': item['width']
-                    },
-                )
-
-        try:
-            response = requests.post(
-                url=f'{settings.GEOLOCATE_URL}{settings.GEOLOCATE_KEY}',
-                json=scan_data_geofied,
-            )
-            response.raise_for_status()
-            json_response = json.loads(response.content)
-            return Response(json_response)
-        except HTTPError as ex:
-            logger.error(f'services.py: Error in geo location call - {ex}')
-            return False
-
 
 class APScanFileViewSet(viewsets.ModelViewSet):
     """API endpoint that allows APScanData to be viewed or edited."""

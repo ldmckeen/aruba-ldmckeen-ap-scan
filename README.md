@@ -6,6 +6,78 @@ This repository contains the codebase for a production ready, maintainable, test
 ## Tech Stack Details
 Following is a full comprehensive list of all the requirements to use and setup this
 application accordingly.
+
+This application makes use of a python language environment, Django Rest Framework for the
+RESTful API, an MVC architecture with Django and DRF combined, the DB of your choice.
+(sqlite3 by default or Postgres).
+
+It also utilises Google Geolocation API to get location specific Latitude and Longitude
+details for the sensor data:
+Reference - https://developers.google.com/maps/documentation/geolocation/overview
+
+(See Developer Setup Section below for local development setup.)
+
+###Environment Variables:
+This project makes use of environment variables.
+Ensure you have a .env file in your root directory, mimic the .env.template file.
+If using passwords or tokens store the passwords and secrets in a vault in the cloud
+and reference the value from there in your builds
+Also always backup these values on a web application such as lastpass or 1password
+(Or any Web Password manager of your choice)<br>
+https://www.lastpass.com/<br>
+https://1password.com/
+
+## Running the Application
+### Django Rest Framework
+This application makes use of python and the Django Rest Framework.
+To run the application:
+`python manage.py runserver <port-number (defaults to 8000)>`
+Migrate models to DB (If you want to make use of Object specific APScan data endpoints)
+and/or a new Database:
+`python manage.py migrate`
+
+### Making an API call
+The apscan endpoint takes a zipfile as input and calls the Google’s geolocation API to
+return the geolocation of the sensor from the apscan data list.
+
+####Curl command:
+`curl -i -u 'admin:Arubaapscan_1234' -H 'Content-Type: multipart/form-data' -F 'file=@BE scan.json.zip' http://localhost:8000/apscan_file/geolocate/`
+
+####Via browser:
+(Make sure you're logged in with your DRF user. -> Login top right of broswer window)
+Navigate to `/apscan_file` viewset from root, and under extra actions select Geolocate.
+
+Choose File
+<img src="./resources/DRF/DRF_frontend_browser_choose_file.png" alt="DRF Choose File" title="DRF Choose File" style="">
+Make Post Request
+<img src="./resources/DRF/DRF_frontend_browser_post_request.png" alt="DRF Post Request" title="DRF Post Request" style="">
+Post Request Response
+<img src="./resources/DRF/DRF_frontend_browser_post_request_result.png" alt="DRF Post Request Response" title="DRF Post Request Response" style="">
+
+
+#### API tools (like Insomnia or Postman):
+Post command:
+Make a POST call with Multipart Form with `file` as key and zip file as value, and
+basic auth enabled with username and password.
+
+See Insomnia folder for collections:
+
+`http://localhost:8000/apscan_file/geolocate/`
+
+Multipart-Form
+<img src="./resources/insomnia/insomnia_post_call_multipart_form.png" alt="Insomnia Post Call" title="Insomnia Post Call" style="">
+Basic Auth
+<img src="./resources/insomnia/insomnia_post_call_auth_basic.png" alt="Insomnia Post Call" title="Insomnia Post Call" style="">
+
+
+### Program Inputs and Outputs
+* #### Input (Subset of Data in Sample Files Directory)<br>
+
+* #### Output
+
+
+## =================================
+## Developer Setup
 ### Pre-requisites
 When setting up a local environment for developing ensure you are using a local
 virtual environment for optimal sand-boxing and testing to minimize clashes with
@@ -83,38 +155,6 @@ Configure pre-commit
 *Git Tutorials*:
 `https://guides.github.com/activities/hello-world/`
 
-###Environment Variables:
-This project makes use of environment variables.
-Ensure you have a .env file in your root directory, mimic the .env.template file.
-If using passwords or tokens store the passwords and secrets in a vault in the cloud
-and reference the value from there in your builds
-Also always backup these values on a web application such as lastpass or 1password
-(Or any Web Password manager of your choice)<br>
-https://www.lastpass.com/<br>
-https://1password.com/
-
-## Running the Python Application
-### Usage
-### Django Rest Framework
-This application makes use of python and the Django Rest Framework.
-To run the application:
-`python manage.py runserver <port-number (defaults to 8000)>`
-Migrate models to DB (If you want to make use of Object specific APScan data endpoints)
-`python manage.py migrate`
-
-### Making an API call
-The apscan endpoint takes a zipfile as input and calls the Google’s geolocation API to
-return the geolocation of the sensor from the apscan data list.
-
-
-Reference: https://developers.google.com/maps/documentation/geolocation/overview
-
-Login:
-`admin@arubaapscan.com`
-Password:
-`Arubaapscan_1234`
-
-The Aruba Index Python file (span_index.py) is the entrypoint for this application.<br>
 
 Run this python file from your virtual environment (or hosted server with python installed)
 with the python commands below:<br>
@@ -140,7 +180,3 @@ To run the unit tests you can use the single command:<br>
 
 For more information and resources on Pytest please see Pytest docs:
 https://docs.pytest.org/en/7.2.x/
-### Program Inputs and Outputs
-* #### Input (Subset of Data in Sample Files Directory)<br>
-
-* #### Output

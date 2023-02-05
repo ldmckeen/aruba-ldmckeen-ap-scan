@@ -40,7 +40,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 
 
-class APScanDataSerializer(serializers.ModelSerializer):
+class APScanDataSerializer(serializers.HyperlinkedModelSerializer):
     """Class to validate APScan Data."""
 
     class Meta:
@@ -62,25 +62,13 @@ class APScanDataSerializer(serializers.ModelSerializer):
         ]
 
 
-class APScanFileSerializer(serializers.Serializer):
+class APScanFileSerializer(serializers.HyperlinkedModelSerializer):
     """Class to validate APScan File."""
 
-    file = serializers.FileField(read_only=True)
+    class Meta:
+        """Nested Meta Class."""
 
-    def create(self, validated_data):
-        """AP Scan File creation."""
-        return APScanFile(id=None, **validated_data)
-
-    def update(self, instance, validated_data):
-        """AP Scan File Update."""
-        for field, value in validated_data.items():
-            setattr(instance, field, value)
-        return instance
-
-    # class Meta:
-    #     """Nested Meta Class."""
-    #
-    #     model = APScanFile
-    #     fields = [
-    #         'file'
-    #     ]
+        model = APScanFile
+        fields = [
+            'file'
+        ]
