@@ -17,15 +17,18 @@ Reference - https://developers.google.com/maps/documentation/geolocation/overvie
 
 (See Developer Setup Section below for local development setup.)
 
-### QuickStart for local dev setup and demo
+### QuickStart for local setup and demo
 (Assumed system has Python 3, Pyenv, pip and Memcached installed and environment variables set - See resources below)
 1. `pyenv virtualenv 3.8.7 aruba-ap-scan`
 2. `pyenv activate aruba-ap-scan`
 3. `pip install -r requirements.dev.txt`
 4. `pip install -r requirements.txt`
-5. `python manage.py migrate`
-6. `python manage.py createsuperuser`
-7. `curl -i -u 'admin:<user-password>' -H 'Content-Type: multipart/form-data' -F 'file=@./sample_input/BE scan.json.zip' http://localhost:8000/apscan_file/geolocate/`
+5. `curl -i -u 'admin:<user-password>' -H 'Content-Type: multipart/form-data' -F 'file=@./sample_input/BE scan.json.zip' http://localhost:8000/apscan_file/geolocate/`
+
+If wanting to use a new database:
+1. `python manage.py migrate`
+2. `python manage.py createsuperuser`
+    Follow the prompts and add user details
 
 ### Environment Variables:
 This project makes use of environment variables.

@@ -1,5 +1,5 @@
 # Documented Notes for Aruba Reviewers
-Repo is shipped with sqllite DB, to login use:
+Repo is shipped with sqllite DB for ease of quick setup, to login use:
 username=admin
 password=<will send in mail>
 
@@ -30,6 +30,8 @@ and descriptions in the files themselves as ideally the code should be readable 
 enough to derive meaning, context and logic flow from the code itself, but again for the sake
 of ‘demo’ purposes in this case it was just for an in depth showcase of the solution to the
 problem statement presented and tasked.
+
+The READMe is extensive enough for future newcomers to the repo to setup with all the information needed.
 
 Any further info please don’t hesitate to reach out to me.
 I can disclaim this code was written entirely by myself (albeit with some references to online
