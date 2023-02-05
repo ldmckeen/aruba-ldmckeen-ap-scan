@@ -172,3 +172,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Application Environment Variables
 GEOLOCATE_URL = env.str('GEOLOCATE_URL')
 GEOLOCATE_KEY = env.str('GEOLOCATE_KEY')
+USE_CACHE = env.bool('USE_CACHE', False)
+MEMCACHE_URL = env.str('MEMCACHE_URL', 'localhost')
+MEMCACHE_PORT = env.str('MEMCACHE_PORT', '11211')

@@ -112,6 +112,9 @@ import requests
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
+from pymemcache.client import base
+from pymemcache.client.retrying import RetryingClient
+from pymemcache.exceptions import MemcacheUnexpectedCloseError
 from requests.exceptions import HTTPError
 from rest_framework import permissions
 from rest_framework import viewsets
@@ -163,6 +166,20 @@ class APScanFileViewSet(viewsets.ModelViewSet):
     @action(methods=['POST'], detail=False, url_path='geolocate', url_name='geolocate')
     def geolocate(self, request: Request, pk=None, *args, **kwargs):
         """Find Geographic location of Sensor Input."""
+        if settings.USE_CACHE:
+            # Memcached Client Instantiation: Ensure `memcached' is running
+            base_client = base.Client((settings.MEMCACHE_URL, settings.MEMCACHE_PORT))
+            client = RetryingClient(
+                base_client,
+                attempts=3,
+                retry_delay=0.01,
+                retry_for=[MemcacheUnexpectedCloseError]
+            )
+            apscan_memcache_key = ''  # Memcached Key initialised to default empty value
+
+        # Variable to store cached result if needed, defaulted None
+        geo_locate_result = None
+
         # Setup Dictionary object that will be converted to Json for
         scan_data_geofied = {
             'considerIp': 'false',
@@ -179,6 +196,8 @@ class APScanFileViewSet(viewsets.ModelViewSet):
         # Map Apscan data to required fields for Google Geolocation API
         for apscan, sensor_data in apscan_data.items():
             for item in sensor_data:
+                if settings.USE_CACHE:
+                    apscan_memcache_key += item['bssid']
                 scan_data_geofied['wifiAccessPoints'].append(
                     {
                         'macAddress': item['bssid'],
@@ -187,14 +206,29 @@ class APScanFileViewSet(viewsets.ModelViewSet):
                     },
                 )
 
-        try:
-            response = requests.post(
-                url=f'{settings.GEOLOCATE_URL}{settings.GEOLOCATE_KEY}',
-                json=scan_data_geofied,
-            )
-            response.raise_for_status()
-            json_response = json.loads(response.content)
+        # If caching enabled attempt to retrieve cached result
+        if settings.USE_CACHE:
+            try:
+                geo_locate_result = client.get('apscan_memcache_key')
+            except HTTPError as ex:
+                logger.error(f'Memcache: Error in accessing memcache - {ex}')
+
+        if geo_locate_result is None:
+            try:
+                response = requests.post(
+                    url=f'{settings.GEOLOCATE_URL}{settings.GEOLOCATE_KEY}',
+                    json=scan_data_geofied,
+                )
+                response.raise_for_status()
+
+                if settings.USE_CACHE:
+                    # Cache the result for next time:
+                    client.set('apscan_memcache_key', response.content)
+                json_response = json.loads(response.content)
+                return Response(json_response)
+            except HTTPError as ex:
+                logger.error(f'services.py: Error in geo location call - {ex}')
+                return False
+        else:
+            json_response = json.loads(geo_locate_result)
             return Response(json_response)
-        except HTTPError as ex:
-            logger.error(f'services.py: Error in geo location call - {ex}')
-            return False

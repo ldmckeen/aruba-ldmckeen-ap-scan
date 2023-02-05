@@ -48,6 +48,9 @@ helpful API's regarding sensor data.
 * Update Exception handling to exit more gracefully and send raise errors to the console where applicable.
 * Update logging to output to log files and std out with single logging code statements
 * Add swagger for prettier and more functional frontend API capabilities.
+* Updating caching to improve retrieval with additional check on ap scans bssids.
+i.e even if missing bssid's get cached result, only recall geolocate API of completely new
+bssid's present that weren't there before.
 
 #### System Updates
 * Update to make use of a choice of DB instances.

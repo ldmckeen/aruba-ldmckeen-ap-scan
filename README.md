@@ -36,6 +36,25 @@ Migrate models to DB (If you want to make use of Object specific APScan data end
 and/or a new Database:
 `python manage.py migrate`
 
+### Caching
+This application makes use of Memcached and the python Library pymemcache for caching. Ensure
+Memcached is installed alongside python and make sure pymemcache is included in your requirements
+file.
+To toggle Caching on or off set the `USE_CACHE` boolean variable in your .env file
+#####Brew:
+Install: `brew install memcached`
+Start Memcache service: `brew services start memcached`
+Stop Memcache service: `brew services stop memcached`
+Restart Memcache service: `brew services restart memcached`
+
+See resources below for installation and reference:
+https://pypi.org/project/pymemcache/
+https://memcached.org/
+https://realpython.com/python-memcache-efficient-caching/
+
+If you want to create a super-user:
+`python manage.py createsuperuser`
+
 ### Making an API call
 The apscan endpoint takes a zipfile as input and calls the Google’s geolocation API to
 return the geolocation of the sensor from the apscan data list.
