@@ -1,5 +1,5 @@
 """
-Aruba AP Scan Application.
+aruba AP Scan Application.
 
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 <settings.py> Settings config for aruba_scan_api project.
@@ -7,7 +7,7 @@ Aruba AP Scan Application.
 Author:             Lloyd McKeen
 Github Username:    ldmckeen
 Email:              ldmckeen@gmail.com
-Company:            Aruba
+Company:            aruba
 Date:               January 2023
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 ===========================================================================================
@@ -62,9 +62,9 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
-    'DEFAULT_PERMISSION_CLASSES': [],
-    'UNAUTHENTICATED_USER': None,
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [],
+    # 'DEFAULT_PERMISSION_CLASSES': [],
+    # 'UNAUTHENTICATED_USER': None,
 }
 
 MIDDLEWARE = [

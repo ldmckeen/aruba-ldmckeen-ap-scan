@@ -17,6 +17,16 @@ Reference - https://developers.google.com/maps/documentation/geolocation/overvie
 
 (See Developer Setup Section below for local development setup.)
 
+### QuickStart for local dev setup and demo
+(Assumed system has Python 3, Pyenv, pip and Memcached installed and environment variables set - See resources below)
+1. `pyenv virtualenv 3.8.7 aruba-ap-scan`
+2. `pyenv activate aruba-ap-scan`
+3. `pip install -r requirements.dev.txt`
+4. `pip install -r requirements.txt`
+5. `python manage.py migrate`
+6. `python manage.py createsuperuser`
+7. `curl -i -u 'admin:<user-password>' -H 'Content-Type: multipart/form-data' -F 'file=@./sample_input/BE scan.json.zip' http://localhost:8000/apscan_file/geolocate/`
+
 ### Environment Variables:
 This project makes use of environment variables.
 Ensure you have a .env file in your root directory, mimic the .env.template file.
@@ -62,18 +72,18 @@ The apscan endpoint takes a zipfile as input and calls the Google’s geolocatio
 return the geolocation of the sensor from the apscan data list.
 
 #### Curl command:
-`curl -i -u 'admin:Arubaapscan_1234' -H 'Content-Type: multipart/form-data' -F 'file=@BE scan.json.zip' http://localhost:8000/apscan_file/geolocate/`
+`curl -i -u 'admin:<user-password>' -H 'Content-Type: multipart/form-data' -F 'file=@./sample_input/BE scan.json.zip' http://localhost:8000/apscan_file/geolocate/`
 
 #### Via browser:
 (Make sure you're logged in with your DRF user. -> Login top right of browser window)
 Navigate to `/apscan_file` viewset from root, and under extra actions select Geolocate.
 
 Choose File
-<img src="./resources/DRF/DRF_frontend_browser_choose_file.png" alt="DRF Choose File" title="DRF Choose File" style="">
+<img src="./resources/drf/DRF_frontend_browser_choose_file.png" alt="DRF Choose File" title="DRF Choose File" style="">
 Make Post Request
-<img src="./resources/DRF/DRF_frontend_browser_post_request.png" alt="DRF Post Request" title="DRF Post Request" style="">
+<img src="./resources/drf/DRF_frontend_browser_post_request.png" alt="DRF Post Request" title="DRF Post Request" style="">
 Post Request Response
-<img src="./resources/DRF/DRF_frontend_browser_post_request_result.png" alt="DRF Post Request Response" title="DRF Post Request Response" style="">
+<img src="./resources/drf/DRF_frontend_browser_post_request_result.png" alt="DRF Post Request Response" title="DRF Post Request Response" style="">
 
 
 #### API tools (like Insomnia or Postman):

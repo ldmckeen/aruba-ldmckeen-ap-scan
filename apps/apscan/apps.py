@@ -1,13 +1,13 @@
 """
-Aruba AP Scan Application.
+aruba AP Scan Application.
 
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-<apps.py> DRF Apps File
+<apps.py> drf Apps File
 
 Author:             Lloyd McKeen
 Github Username:    ldmckeen
 Email:              ldmckeen@gmail.com
-Company:            Aruba
+Company:            aruba
 Date:               January 2023
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 ===========================================================================================

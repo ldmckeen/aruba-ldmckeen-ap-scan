@@ -1,13 +1,13 @@
 """
-Aruba AP Scan Application.
+aruba AP Scan Application.
 
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-<views.py> DRF Views File
+<views.py> drf Views File
 
 Author:             Lloyd McKeen
 Github Username:    ldmckeen
 Email:              ldmckeen@gmail.com
-Company:            Aruba
+Company:            aruba
 Date:               January 2023
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 ===========================================================================================
@@ -86,7 +86,7 @@ Our APScan data
   }
 ]
 
-Aruba File to Geolocation file mapping
+aruba File to Geolocation file mapping
 --------------------------------->>>>>>
 bssid": "e8:1d:a8:68:a6:6c"    "macAddress": "84:d4:7e:f6:99:64"
 "rssi": -82                    "signalStrength": -5

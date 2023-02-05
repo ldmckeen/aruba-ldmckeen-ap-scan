@@ -1,4 +1,7 @@
 # Documented Notes for Aruba Reviewers
+Repo is shipped with sqllite DB, to login use:
+username=admin
+password=<will send in mail>
 
 Below is a brief outline of some items for the Aruba team Reviewing:
 ### Caveats

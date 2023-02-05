@@ -1,5 +1,5 @@
 """
-Aruba AP Scan Application.
+aruba AP Scan Application.
 
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 <wsgi.py> WSGI config for aruba_scan_api project.
@@ -7,7 +7,7 @@ Aruba AP Scan Application.
 Author:             Lloyd McKeen
 Github Username:    ldmckeen
 Email:              ldmckeen@gmail.com
-Company:            Aruba
+Company:            aruba
 Date:               January 2023
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 ===========================================================================================
