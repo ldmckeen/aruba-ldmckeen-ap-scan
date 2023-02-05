@@ -21,7 +21,8 @@ Reference - https://developers.google.com/maps/documentation/geolocation/overvie
 This project makes use of environment variables.
 Ensure you have a .env file in your root directory, mimic the .env.template file.
 If using passwords or tokens store the passwords and secrets in a vault in the cloud
-and reference the value from there in your builds
+and reference the value from there in your builds.
+
 Also always backup these values on a web application such as lastpass or 1password
 (Or any Web Password manager of your choice)<br>
 https://www.lastpass.com/<br>
@@ -48,8 +49,9 @@ Stop Memcache service: `brew services stop memcached`
 Restart Memcache service: `brew services restart memcached`
 
 See resources below for installation and reference:
-https://pypi.org/project/pymemcache/
 https://memcached.org/
+https://pypi.org/project/pymemcache/
+https://pymemcache.readthedocs.io/en/latest/getting_started.html
 https://realpython.com/python-memcache-efficient-caching/
 
 If you want to create a super-user:
@@ -91,8 +93,17 @@ Basic Auth
 
 ### Program Inputs and Outputs
 * #### Input (Subset of Data in Sample Files Directory)<br>
+<br>* i.e Sample Files to test are stored in ./sample_input
 
 * #### Output
+* Example Return:
+`{
+	"location": {
+		"lat": -33.920373,
+		"lng": 25.5912481
+	},
+	"accuracy": 20
+}`
 
 
 ## =================================
@@ -161,9 +172,9 @@ Configure pre-commit
 ###### Common git commands when pushing to repo :*<br>
 * Checkout to new branch:
 <br>* `git checkout -b "feature/<ticket-id>-<short-descriptor>"`
-<br>* eg. `git checkout -b feature/SPAN-101-new-feature`
+<br>* eg. `git checkout -b feature/ARUBA-101-new-feature`
 * Set upstream branch:
-<br>* `git push --set-upstream origin feature/SPAN-101-new-feature`
+<br>* `git push --set-upstream origin feature/ARUBA-101-new-feature`
 *Stage all changed files in current directory for commit:
 <br>* `git add .`
 * Check status of current branch:
@@ -174,14 +185,6 @@ Configure pre-commit
 *Git Tutorials*:
 `https://guides.github.com/activities/hello-world/`
 
-
-Run this python file from your virtual environment (or hosted server with python installed)
-with the python commands below:<br>
-* For use with a file input:
-<br>* `python aruba_ap.py`
-<br>* i.e Sample Files to test are stored in ./sample_input
-* For use with a command line input as comma and newline seperated text
-<br>* `python aruba_ap.py`
 
 #### Environment Variables
 As mentioned above please make sure to add your own Environment Variable file with the
@@ -196,6 +199,9 @@ testing code resides in the tests folder
 This Application make use of the Pytest unit testing Library.<br>
 To run the unit tests you can use the single command:<br>
 `pytest` from the root directory of the repo.
+
+Example output:
+<img src="./resources/testing/pytest_output.png" alt="Pytest Output" title="Pytest Output" style="">
 
 For more information and resources on Pytest please see Pytest docs:
 https://docs.pytest.org/en/7.2.x/

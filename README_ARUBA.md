@@ -34,6 +34,8 @@ python resources and stack overflow for some non in-brain-memory syntax's and li
 functions etc. :-P
 
 ### Troubleshooting
+Handling of keys from the input data for caching, further updates can be made for intermittent
+AP scans as mentioned in the brief.
 
 ## *Pending Improvements and Future Updates .....*
 ### Application Updates:
@@ -54,6 +56,10 @@ bssid's present that weren't there before.
 
 #### System Updates
 * Update to make use of a choice of DB instances.
+
+#### Testing Updates
+* Add more negative case tests and mock interactions with DB and Geolocation API
+* Add more edge case testing for finer grained interactions with the REST API
 
 #### DeploymentUpdates
 * Dockerise Application for use in a containerised environment
