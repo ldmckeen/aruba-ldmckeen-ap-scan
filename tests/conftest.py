@@ -2,7 +2,7 @@
 Aruba AP Scan Application.
 
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-<tests.py> DRF Tests File
+<conftest.py> Configuration File for Pytest
 
 Author:             Lloyd McKeen
 Github Username:    ldmckeen
@@ -12,5 +12,11 @@ Date:               January 2023
 ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 ===========================================================================================
 """
-# from django.test import TestCase
-# Create your tests here.
+import pytest
+
+
+@pytest.fixture
+def auth_error_403_description():
+    """Auth Error Response Description."""
+    return "{'detail': ErrorDetail(string='You do not have permission to perform this " \
+           "action.', code='permission_denied')}"
